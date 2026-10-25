@@ -1,0 +1,526 @@
+== 09:25:54 python build_dataset.py ../../../cvelist/v5
+{'no_cwe': 42618, 'not_published': 6369, 'duplicates_removed': 10761, 'kept': 182733}
+{'train': 29931, 'dev': 9497, 'test2024': 33337, 'test2025': 41135, 'test2026': 68833}
+train labels/CVE 1.052 ADP-only share 0.249
+dev labels/CVE 1.033 ADP-only share 0.104
+test2024 labels/CVE 1.042 ADP-only share 0.253
+test2025 labels/CVE 1.166 ADP-only share 0.182
+test2026 labels/CVE 1.178 ADP-only share 0.128
+== 09:28:18 python shift_stats.py
+== 09:28:21 python tune_rules.py
+support 3 rules 18305 fit s 10.6
+support 5 rules 8326 fit s 10.1
+support 10 rules 3779 fit s 9.6
+BEST {'s': 3, 'tau': 0.55, 'k': 1, 'tp': 5438, 'fp': 1414, 'fn': 4370, 'p': 0.7936368943374197, 'r': 0.5544453507340946, 'f1': 0.6528211284513805}
+3 {'s': 3, 'tau': 0.55, 'k': 1, 'tp': 5438, 'fp': 1414, 'fn': 4370, 'p': 0.7936368943374197, 'r': 0.5544453507340946, 'f1': 0.6528211284513805}
+5 {'s': 5, 'tau': 0.55, 'k': 1, 'tp': 5438, 'fp': 1414, 'fn': 4370, 'p': 0.7936368943374197, 'r': 0.5544453507340946, 'f1': 0.6528211284513805}
+10 {'s': 10, 'tau': 0.65, 'k': 1, 'tp': 5117, 'fp': 961, 'fn': 4691, 'p': 0.8418887792036854, 'r': 0.5217169657422512, 'f1': 0.6442150321037392}
+== 09:29:04 python run_rules.py
+dev done
+test2024 done
+test2025 done
+test2026 done
+rules 4864 hashes equal True {'Keyword baseline|dev': 0.1, 'Regex baseline|dev': 7.3, 'CyberRule|dev': 6.3, 'Induced rules|dev': 2.3, 'Keyword baseline|test2024': 0.4, 'Regex baseline|test2024': 28.0, 'CyberRule|test2024': 26.4, 'Induced rules|test2024': 9.1, 'Keyword baseline|test2025': 0.5, 'Regex baseline|test2025': 36.9, 'CyberRule|test2025': 32.7, 'Induced rules|test2025': 11.1, 'Keyword baseline|test2026': 0.9, 'Regex baseline|test2026': 72.0, 'CyberRule|test2026': 64.9, 'Induced rules|test2026': 24.9}
+== 09:35:06 python train_lr.py
+classes 139 fit seconds 1194
+dev done
+test2024 done
+test2025 done
+test2026 done
+== 09:58:30 python train_clf2.py
+fit 120 threshold 0.25
+== 10:01:16 python cwe_names.py
+612 Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') Out-of-bounds Write
+== 10:01:29 python analyze.py
+dev-selected LR threshold 0.25 verify t 0.1
+== dev 9497 macro labels 35 {'outside_classifier_classes': 0.07045269168026101}
+Keyword baseline                             P=0.281 R=0.254 F1=0.267 [0.000,0.000] len=0.380 macro=0.094 cov=0.665 cna=0.273
+Regex baseline                               P=0.633 R=0.399 F1=0.490 [0.000,0.000] len=0.600 macro=0.254 cov=0.600 cna=0.509
+CyberRule                                    P=0.671 R=0.410 F1=0.509 [0.000,0.000] len=0.602 macro=0.340 cov=0.585 cna=0.530
+Induced rules                                P=0.794 R=0.554 F1=0.653 [0.000,0.000] len=0.688 macro=0.539 cov=0.721 cna=0.673
+Induced + hand rules                         P=0.647 R=0.593 F1=0.619 [0.000,0.000] len=0.692 macro=0.561 cov=0.809 cna=0.635
+TF-IDF + LR                                  P=0.806 R=0.593 F1=0.683 [0.000,0.000] len=0.738 macro=0.599 cov=0.714 cna=0.696
+Hybrid: rules propose, classifier verifies   P=0.783 R=0.620 F1=0.692 [0.000,0.000] len=0.751 macro=0.620 cov=0.754 cna=0.705
+Hybrid: classifier grounded by rules         P=0.895 R=0.536 F1=0.671 [0.000,0.000] len=0.705 macro=0.561 cov=0.610 cna=0.687
+Hybrid: classifier grounded by hand rules    P=0.912 R=0.377 F1=0.534 [0.000,0.000] len=0.555 macro=0.327 cov=0.424 cna=0.556
+   evidence {'Induced rules': {'n': 6852, 'aligned_share': 0.789, 'precision_aligned': 0.872, 'precision_unaligned': 0.502}, 'CyberRule': {'n': 8131, 'aligned_share': 0.734, 'precision_aligned': 0.765, 'precision_unaligned': 0.59}, 'LR labels with rule evidence': 0.8153952843273231, 'LR labels with hand-rule evidence': 0.5625520110957004}
+   risk-coverage {'0.3': {'confidence': 0.9754299754299754, 'grounded_first': 0.9771849771849772}, '0.5': {'confidence': 0.9330244313395114, 'grounded_first': 0.9406065711878686}, '0.6': {'confidence': 0.9006669006669007, 'grounded_first': 0.9083889083889084}, '0.7': {'confidence': 0.8485030840980894, 'grounded_first': 0.8554234993230029}, '0.8': {'confidence': 0.7904435961563775, 'grounded_first': 0.7975516651309728}} grounded share 0.664 grounded prec 0.87
+== test2024 33337 macro labels 77 {'outside_classifier_classes': 0.06660334455861612}
+Keyword baseline                             P=0.263 R=0.241 F1=0.252 [0.247,0.256] len=0.385 macro=0.041 cov=0.652 cna=0.248
+Regex baseline                               P=0.581 R=0.403 F1=0.476 [0.470,0.481] len=0.631 macro=0.140 cov=0.653 cna=0.489
+CyberRule                                    P=0.652 R=0.442 F1=0.527 [0.522,0.532] len=0.631 macro=0.201 cov=0.628 cna=0.556
+Induced rules                                P=0.777 R=0.571 F1=0.659 [0.654,0.663] len=0.707 macro=0.413 cov=0.766 cna=0.701
+Induced + hand rules                         P=0.616 R=0.607 F1=0.611 [0.607,0.616] len=0.698 macro=0.425 cov=0.835 cna=0.647
+TF-IDF + LR                                  P=0.796 R=0.607 F1=0.688 [0.684,0.693] len=0.754 macro=0.465 cov=0.740 cna=0.728
+Hybrid: rules propose, classifier verifies   P=0.772 R=0.635 F1=0.697 [0.692,0.701] len=0.767 macro=0.487 cov=0.783 cna=0.736
+Hybrid: classifier grounded by rules         P=0.887 R=0.551 F1=0.680 [0.675,0.684] len=0.719 macro=0.399 cov=0.635 cna=0.720
+Hybrid: classifier grounded by hand rules    P=0.912 R=0.408 F1=0.564 [0.559,0.569] len=0.588 macro=0.197 cov=0.461 cna=0.596
+   Induced rules vs CyberRule: 5735/1239 p=0 dF1=+0.132 [+0.128,+0.137]
+   Induced rules vs Regex baseline: 7031/1187 p=0 dF1=+0.183 [+0.178,+0.188]
+   TF-IDF + LR vs Induced rules: 2580/1346 p=1.2e-87 dF1=+0.030 [+0.027,+0.033]
+   Hybrid: rules propose, classifier verifies vs TF-IDF + LR: 982/0 p=4.9e-296 dF1=+0.008 [+0.007,+0.010]
+   CyberRule vs Regex baseline: 2687/1339 p=6.3e-102 dF1=+0.051 [+0.047,+0.054]
+   evidence {'Induced rules': {'n': 25523, 'aligned_share': 0.79, 'precision_aligned': 0.882, 'precision_unaligned': 0.386}, 'CyberRule': {'n': 29989, 'aligned_share': 0.741, 'precision_aligned': 0.729, 'precision_unaligned': 0.574}, 'LR labels with rule evidence': 0.814276546751727, 'LR labels with hand-rule evidence': 0.5874070439017025}
+   risk-coverage {'0.3': {'confidence': 0.9741025897410259, 'grounded_first': 0.9742025797420258}, '0.5': {'confidence': 0.931785457163427, 'grounded_first': 0.9359251259899208}, '0.6': {'confidence': 0.8954604539546045, 'grounded_first': 0.9099590040995901}, '0.7': {'confidence': 0.8538247268052283, 'grounded_first': 0.8653096207413756}, '0.8': {'confidence': 0.8058794855450148, 'grounded_first': 0.8132288424762834}} grounded share 0.691 grounded prec 0.868
+== test2025 41135 macro labels 100 {'outside_classifier_classes': 0.08523769808173477}
+Keyword baseline                             P=0.310 R=0.261 F1=0.284 [0.280,0.288] len=0.449 macro=0.037 cov=0.681 cna=0.292
+Regex baseline                               P=0.639 R=0.389 F1=0.483 [0.479,0.487] len=0.624 macro=0.116 cov=0.649 cna=0.494
+CyberRule                                    P=0.717 R=0.423 F1=0.532 [0.527,0.536] len=0.618 macro=0.184 cov=0.627 cna=0.549
+Induced rules                                P=0.762 R=0.515 F1=0.615 [0.610,0.619] len=0.672 macro=0.367 cov=0.787 cna=0.636
+Induced + hand rules                         P=0.647 R=0.568 F1=0.605 [0.601,0.608] len=0.680 macro=0.387 cov=0.848 cna=0.623
+TF-IDF + LR                                  P=0.802 R=0.534 F1=0.641 [0.637,0.645] len=0.716 macro=0.388 cov=0.715 cna=0.658
+Hybrid: rules propose, classifier verifies   P=0.777 R=0.570 F1=0.658 [0.654,0.661] len=0.738 macro=0.426 cov=0.770 cna=0.674
+Hybrid: classifier grounded by rules         P=0.888 R=0.485 F1=0.627 [0.623,0.631] len=0.677 macro=0.323 cov=0.623 cna=0.646
+Hybrid: classifier grounded by hand rules    P=0.914 R=0.367 F1=0.524 [0.519,0.528] len=0.560 macro=0.161 cov=0.462 cna=0.539
+   Induced rules vs CyberRule: 6938/2530 p=0 dF1=+0.083 [+0.079,+0.087]
+   Induced rules vs Regex baseline: 8585/2529 p=0 dF1=+0.131 [+0.127,+0.136]
+   TF-IDF + LR vs Induced rules: 3256/2355 p=2.2e-33 dF1=+0.026 [+0.023,+0.029]
+   Hybrid: rules propose, classifier verifies vs TF-IDF + LR: 1740/0 p=0 dF1=+0.017 [+0.015,+0.018]
+   CyberRule vs Regex baseline: 3473/1825 p=3.2e-115 dF1=+0.049 [+0.046,+0.052]
+   evidence {'Induced rules': {'n': 32385, 'aligned_share': 0.805, 'precision_aligned': 0.877, 'precision_unaligned': 0.288}, 'CyberRule': {'n': 36967, 'aligned_share': 0.752, 'precision_aligned': 0.798, 'precision_unaligned': 0.601}, 'LR labels with rule evidence': 0.8205530127280707, 'LR labels with hand-rule evidence': 0.6038309611887893}
+   risk-coverage {'0.3': {'confidence': 0.9781199351701783, 'grounded_first': 0.9783630470016208}, '0.5': {'confidence': 0.9268245247240725, 'grounded_first': 0.9326591141148441}, '0.6': {'confidence': 0.8874032656699485, 'grounded_first': 0.9079859000850857}, '0.7': {'confidence': 0.8506980620962701, 'grounded_first': 0.8720566784746823}, '0.8': {'confidence': 0.8009298650784004, 'grounded_first': 0.8189497994408654}} grounded share 0.696 grounded prec 0.873
+== test2026 68833 macro labels 151 {'outside_classifier_classes': 0.1013531015257854}
+Keyword baseline                             P=0.197 R=0.162 F1=0.178 [0.176,0.181] len=0.349 macro=0.022 cov=0.665 cna=0.177
+Regex baseline                               P=0.518 R=0.244 F1=0.332 [0.328,0.335] len=0.498 macro=0.072 cov=0.504 cna=0.341
+CyberRule                                    P=0.620 R=0.285 F1=0.390 [0.387,0.394] len=0.495 macro=0.117 cov=0.483 cna=0.402
+Induced rules                                P=0.635 R=0.388 F1=0.482 [0.478,0.486] len=0.537 macro=0.250 cov=0.720 cna=0.495
+Induced + hand rules                         P=0.536 R=0.437 F1=0.481 [0.478,0.485] len=0.565 macro=0.264 cov=0.791 cna=0.491
+TF-IDF + LR                                  P=0.741 R=0.413 F1=0.530 [0.527,0.533] len=0.620 macro=0.258 cov=0.601 cna=0.532
+Hybrid: rules propose, classifier verifies   P=0.721 R=0.451 F1=0.555 [0.552,0.558] len=0.653 macro=0.285 cov=0.665 cna=0.559
+Hybrid: classifier grounded by rules         P=0.860 R=0.352 F1=0.500 [0.497,0.504] len=0.556 macro=0.207 cov=0.475 cna=0.509
+Hybrid: classifier grounded by hand rules    P=0.868 R=0.235 F1=0.370 [0.366,0.374] len=0.416 macro=0.099 cov=0.317 cna=0.382
+   Induced rules vs CyberRule: 12298/3938 p=0 dF1=+0.091 [+0.088,+0.095]
+   Induced rules vs Regex baseline: 15672/3982 p=0 dF1=+0.150 [+0.146,+0.154]
+   TF-IDF + LR vs Induced rules: 6379/4402 p=3.4e-81 dF1=+0.048 [+0.046,+0.051]
+   Hybrid: rules propose, classifier verifies vs TF-IDF + LR: 3124/0 p=0 dF1=+0.025 [+0.024,+0.026]
+   CyberRule vs Regex baseline: 6138/2808 p=6e-278 dF1=+0.059 [+0.056,+0.061]
+   evidence {'Induced rules': {'n': 49566, 'aligned_share': 0.695, 'precision_aligned': 0.809, 'precision_unaligned': 0.238}, 'CyberRule': {'n': 43721, 'aligned_share': 0.756, 'precision_aligned': 0.705, 'precision_unaligned': 0.406}, 'LR labels with rule evidence': 0.7364071431736606, 'LR labels with hand-rule evidence': 0.486905658705189}
+   risk-coverage {'0.3': {'confidence': 0.9164124170662018, 'grounded_first': 0.9285195408978643}, '0.5': {'confidence': 0.828626220362622, 'grounded_first': 0.8614597861459786}, '0.6': {'confidence': 0.7837962178260974, 'grounded_first': 0.8077435288990048}, '0.7': {'confidence': 0.737251727787809, 'grounded_first': 0.7542909324865616}, '0.8': {'confidence': 0.6893545926706135, 'grounded_first': 0.6978534849090182}} grounded share 0.565 grounded prec 0.824
+== 10:07:29 python tiers.py
+test2024 {'tiers': {'aligned': {'share': 0.7323241855724586, 'precision': 0.9132989690721649}, 'unaligned': {'share': 0.08195236117926843, 'precision': 0.6517733763242746}, 'none': {'share': 0.185723453248273, 'precision': 0.3951219512195122}}, 'induced_aligned_only': {'tp': 17771, 'fp': 2383, 'fn': 16972, 'p': 0.881760444576759, 'r': 0.5114987191664508, 'f1': 0.6474306428402282}}
+test2025 {'tiers': {'aligned': {'share': 0.7507367233055364, 'precision': 0.9160646427527457}, 'unaligned': {'share': 0.06981628942253433, 'precision': 0.590929501571621}, 'none': {'share': 0.1794469872719293, 'precision': 0.4086303284416492}}, 'induced_aligned_only': {'tp': 22873, 'fp': 3199, 'fn': 25087, 'p': 0.8773013194231359, 'r': 0.4769182652210175, 'f1': 0.6179219796844608}}
+test2026 {'tiers': {'aligned': {'share': 0.6375238179642841, 'precision': 0.8837492180440676}, 'unaligned': {'share': 0.09888332520937652, 'precision': 0.705355142280977}, 'none': {'share': 0.2635928568263394, 'precision': 0.4095990585861982}}, 'induced_aligned_only': {'tp': 27868, 'fp': 6563, 'fn': 53205, 'p': 0.8093868897214719, 'r': 0.34373959271274035, 'f1': 0.48254605901094333}}
+== 10:07:39 python clf2_tiers.py
+test2024 {'clf2': (0.796, 0.614, 0.693), 'verify': (0.772, 0.637, 0.698), 'grounded': (0.886, 0.558, 0.685)} {'aligned': (0.733, 0.913), 'unaligned': (0.082, 0.644), 'none': (0.185, 0.398)}
+test2025 {'clf2': (0.812, 0.545, 0.652), 'verify': (0.788, 0.575, 0.665), 'grounded': (0.884, 0.495, 0.634)} {'aligned': (0.761, 0.916), 'unaligned': (0.074, 0.551), 'none': (0.165, 0.45)}
+test2026 {'clf2': (0.759, 0.415, 0.537), 'verify': (0.733, 0.449, 0.557), 'grounded': (0.862, 0.359, 0.507)} {'aligned': (0.662, 0.883), 'unaligned': (0.099, 0.721), 'none': (0.239, 0.429)}
+== 10:07:53 python ablate_ir.py
+full (n<=4, stop-word trimming, no digits, Wilson LB) rules=  4864 P=0.794 R=0.554 F1=0.653
+unigrams only                            rules=   317 P=0.701 R=0.374 F1=0.488
+n<=2                                     rules=  1506 P=0.793 R=0.539 F1=0.642
+without stop-word trimming               rules= 12546 P=0.733 R=0.557 F1=0.633
+allow digits (versions, IDs)             rules=  5333 P=0.792 R=0.555 F1=0.653
+raw precision instead of Wilson bound    rules=  7851 P=0.729 R=0.571 F1=0.640
+top-2 CWEs per CVE                       rules=  4864 P=0.620 R=0.575 F1=0.597
+== 10:09:29 python learning_curve.py
+{'frac': 0.05, 'n_train': 1496, 'induced_f1': 0.4847094801223242, 'induced_p': 0.7550282286520819, 'induced_r': 0.3569224353628023, 'induced_seconds': 0.7434446811676025, 'lr_f1': 0.48947724708537055, 'lr_p': 0.8786929516608155, 'lr_r': 0.33922018348623856, 'lr_seconds': 6.099076986312866, 'lr_classes': 18}
+{'frac': 0.1, 'n_train': 2993, 'induced_f1': 0.5293199913922961, 'induced_p': 0.7456047287056684, 'induced_r': 0.4103002502085071, 'induced_seconds': 0.855999231338501, 'lr_f1': 0.5394121244009613, 'lr_p': 0.8481731586243907, 'lr_r': 0.39545454545454545, 'lr_seconds': 17.85303568840027, 'lr_classes': 34}
+{'frac': 0.25, 'n_train': 7482, 'induced_f1': 0.5874105790820322, 'induced_p': 0.7854699064376484, 'induced_r': 0.4691201000834028, 'induced_seconds': 3.0367608070373535, 'lr_f1': 0.5864219791374498, 'lr_p': 0.8157630708632158, 'lr_r': 0.45773561301084237, 'lr_seconds': 102.47866082191467, 'lr_classes': 62}
+{'frac': 0.5, 'n_train': 14965, 'induced_f1': 0.5968925940583948, 'induced_p': 0.7697652211136357, 'induced_r': 0.48742702251876563, 'induced_seconds': 5.2080159187316895, 'lr_f1': 0.6159484098207811, 'lr_p': 0.8127050300710771, 'lr_r': 0.49589241034195164, 'lr_seconds': 388.3614089488983, 'lr_classes': 97}
+== 10:21:34 python expand.py
+refresh train (original) 0.482 0.537
+refresh + dev (to Dec 2023) 0.482 0.551
+refresh + 2024 0.482 0.574
+refresh + 2025 0.493 0.634
+rolling 0.65 1 0.2 0.499 0.639
+{
+ "per_cna": {
+  "test2024": [
+   {
+    "assigner": "mitre",
+    "n": 5598,
+    "share": 0.1679215286318505,
+    "hand": 0.47351894494452584,
+    "induced": 0.5585168018539978,
+    "lr": 0.605589450895493,
+    "verify": 0.6093615391978557
+   },
+   {
+    "assigner": "Patchstack",
+    "n": 4468,
+    "share": 0.1340252572217056,
+    "hand": 0.8865264617517911,
+    "induced": 0.9613782231730661,
+    "lr": 0.9211306131752907,
+    "verify": 0.9385205479452055
+   },
+   {
+    "assigner": "Wordfence",
+    "n": 3492,
+    "share": 0.10474847766745658,
+    "hand": 0.7198019801980198,
+    "induced": 0.7840810419681621,
+    "lr": 0.8660245183887917,
+    "verify": 0.8651685393258428
+   },
+   {
+    "assigner": "VulDB",
+    "n": 2904,
+    "share": 0.08711041785403606,
+    "hand": 0.5772804854921297,
+    "induced": 0.7670882023371218,
+    "lr": 0.8206404513024722,
+    "verify": 0.8358692133376497
+   },
+   {
+    "assigner": "GitHub_M",
+    "n": 2105,
+    "share": 0.06314305426403095,
+    "hand": 0.3594981032973446,
+    "induced": 0.3670371374356194,
+    "lr": 0.4276546091015169,
+    "verify": 0.4519899805176733
+   },
+   {
+    "assigner": "zdi",
+    "n": 1286,
+    "share": 0.03857575666676666,
+    "hand": 0.40794627867935085,
+    "induced": 0.8887096774193548,
+    "lr": 0.9161490683229814,
+    "verify": 0.9057611598626478
+   },
+   {
+    "assigner": "WPScan",
+    "n": 757,
+    "share": 0.022707502174760776,
+    "hand": 0.8868175765645805,
+    "induced": 0.8267716535433071,
+    "lr": 0.9012658227848102,
+    "verify": 0.9001883239171375
+   },
+   {
+    "assigner": "Linux",
+    "n": 627,
+    "share": 0.018807931127575967,
+    "hand": 0.5149171270718232,
+    "induced": 0.5690298507462686,
+    "lr": 0.5446428571428571,
+    "verify": 0.6150627615062761
+   }
+  ],
+  "test2025": [
+   {
+    "assigner": "Patchstack",
+    "n": 6913,
+    "share": 0.1680563996596572,
+    "hand": 0.8612777444511097,
+    "induced": 0.8820960698689957,
+    "lr": 0.8609261385380789,
+    "verify": 0.8780771185825287
+   },
+   {
+    "assigner": "VulDB",
+    "n": 5894,
+    "share": 0.1432843077671083,
+    "hand": 0.5293084379676014,
+    "induced": 0.5753907627218239,
+    "lr": 0.5878444881889764,
+    "verify": 0.6213511259382819
+   },
+   {
+    "assigner": "mitre",
+    "n": 5131,
+    "share": 0.12473562659535675,
+    "hand": 0.45693563009972804,
+    "induced": 0.5121225983531564,
+    "lr": 0.5796729721064443,
+    "verify": 0.5902792140641158
+   },
+   {
+    "assigner": "Wordfence",
+    "n": 3424,
+    "share": 0.08323811839066489,
+    "hand": 0.6865331379254193,
+    "induced": 0.7449476323941585,
+    "lr": 0.8549871736834164,
+    "verify": 0.8521790341578327
+   },
+   {
+    "assigner": "GitHub_M",
+    "n": 2864,
+    "share": 0.06962440743892062,
+    "hand": 0.3489208633093525,
+    "induced": 0.36637530221312997,
+    "lr": 0.4242671009771987,
+    "verify": 0.4523213253708341
+   },
+   {
+    "assigner": "Linux",
+    "n": 1073,
+    "share": 0.02608484259146712,
+    "hand": 0.5389067524115755,
+    "induced": 0.6719492868462758,
+    "lr": 0.6140350877192983,
+    "verify": 0.6990740740740741
+   },
+   {
+    "assigner": "VulnCheck",
+    "n": 759,
+    "share": 0.01845144037923909,
+    "hand": 0.4701298701298701,
+    "induced": 0.5574210879785091,
+    "lr": 0.6590765338393422,
+    "verify": 0.6486161251504212
+   },
+   {
+    "assigner": "microsoft",
+    "n": 722,
+    "share": 0.017551963048498844,
+    "hand": 0.3493212669683258,
+    "induced": 0.71513353115727,
+    "lr": 0.7206266318537858,
+    "verify": 0.712258064516129
+   }
+  ],
+  "test2026": [
+   {
+    "assigner": "GitHub_M",
+    "n": 11734,
+    "share": 0.17047055917946333,
+    "hand": 0.24914308099108803,
+    "induced": 0.2848284063880394,
+    "lr": 0.3410546592824464,
+    "verify": 0.37497122335282473
+   },
+   {
+    "assigner": "VulnCheck",
+    "n": 6931,
+    "share": 0.10069298156407537,
+    "hand": 0.4269662921348314,
+    "induced": 0.46368341960260473,
+    "lr": 0.5407718120805368,
+    "verify": 0.554107014316564
+   },
+   {
+    "assigner": "VulDB",
+    "n": 5730,
+    "share": 0.08324495518138102,
+    "hand": 0.5249548171833727,
+    "induced": 0.551576292559899,
+    "lr": 0.4976592424457369,
+    "verify": 0.5743617092193853
+   },
+   {
+    "assigner": "Patchstack",
+    "n": 4677,
+    "share": 0.06794706027632096,
+    "hand": 0.7083602532626954,
+    "induced": 0.7468502099860009,
+    "lr": 0.6804433156314939,
+    "verify": 0.7180113194983909
+   },
+   {
+    "assigner": "Wordfence",
+    "n": 3550,
+    "share": 0.05157409963244374,
+    "hand": 0.7534565791517789,
+    "induced": 0.7178252867053659,
+    "lr": 0.8435990338164252,
+    "verify": 0.8477847638543646
+   },
+   {
+    "assigner": "mitre",
+    "n": 3532,
+    "share": 0.05131259715543417,
+    "hand": 0.41943653054764163,
+    "induced": 0.46464646464646464,
+    "lr": 0.5240438025710206,
+    "verify": 0.5394254278728606
+   },
+   {
+    "assigner": "Chrome",
+    "n": 3056,
+    "share": 0.04439730943006988,
+    "hand": 0.14155879922886258,
+    "induced": 0.43437552248787825,
+    "lr": 0.5952626158599382,
+    "verify": 0.6141700404858299
+   },
+   {
+    "assigner": "microsoft",
+    "n": 2459,
+    "share": 0.035724143942585676,
+    "hand": 0.40800197579649294,
+    "induced": 0.7523652817770465,
+    "lr": 0.7732978318752379,
+    "verify": 0.7690278824415977
+   }
+  ]
+ },
+ "refresh_2026": {
+  "train (original)": {
+   "n_train": 29931,
+   "rules": 4864,
+   "induced": {
+    "tp": 31473,
+    "fp": 18093,
+    "fn": 49600,
+    "p": 0.6349715530807408,
+    "r": 0.38820569116721965,
+    "f1": 0.48183161230566673
+   },
+   "sgd": {
+    "tp": 33648,
+    "fp": 10712,
+    "fn": 47425,
+    "p": 0.7585211902614969,
+    "r": 0.4150333649920442,
+    "f1": 0.5365095309846691
+   },
+   "sgd_classes": 139
+  },
+  "+ dev (to Dec 2023)": {
+   "n_train": 39428,
+   "rules": 6023,
+   "induced": {
+    "tp": 31735,
+    "fp": 18826,
+    "fn": 49338,
+    "p": 0.6276576808211863,
+    "r": 0.3914373465888767,
+    "f1": 0.48217025996323143
+   },
+   "sgd": {
+    "tp": 35151,
+    "fp": 11374,
+    "f
+== 11:20:01 python export_kb.py
+CQ1: assertions per evidence tier [['aligned', '80329'], ['none', '22541'], ['unaligned', '11601']] 3.65
+CQ2: CVEs with an aligned CWE-79 assertion [['19344']] 0.79
+CQ3: assertions without any evidence span (review queue) [['22541']] 12.36
+{'cves': 143305, 'assertions': 114471, 'evidence_spans': 163247, 'triples': 1924086, 'serialize_seconds': 84.23008275032043, 'parse_seconds': 107.90389728546143}
+== 11:26:04 python kb_tiers.py
+{'aligned': {'n': 80329, 'correct': 70156, 'precision': 0.8733583139339467}, 'all': {'n': 114471, 'correct': 85965, 'precision': 0.750976229787457, 'gold_total': 163776}, 'unaligned': {'n': 11601, 'correct': 6653, 'precision': 0.5734850443927247}, 'none': {'n': 22541, 'correct': 9156, 'precision': 0.4061931591322479}}
+== 11:26:09 python export_predictions.py
+{'lr_threshold': 0.25, 'verify_t': 0.1, 'sgd_threshold': 0.25, 'systems': ['Keyword baseline', 'Regex baseline', 'CyberRule', 'Induced rules', 'Induced + hand rules', 'TF-IDF + LR', 'Hybrid: rules propose, classifier verifies', 'Hybrid: classifier grounded by rules', 'Hybrid: classifier grounded by hand rules', 'SGD classifier']}
+== 11:26:29 python evaluate.py predictions --check results_p2.json
+
+== test2024  (33337 CVEs, 77 CWEs in macro-F1)
+Keyword baseline                             P=0.263 R=0.241 F1=0.252 [0.247,0.256] macro=0.041 exact=0.150
+Regex baseline                               P=0.581 R=0.403 F1=0.476 [0.470,0.481] macro=0.140 exact=0.370
+CyberRule                                    P=0.652 R=0.442 F1=0.527 [0.522,0.532] macro=0.201 exact=0.398
+Induced rules                                P=0.777 R=0.571 F1=0.659 [0.654,0.663] macro=0.413 exact=0.573
+Induced + hand rules                         P=0.616 R=0.607 F1=0.611 [0.607,0.616] macro=0.425 exact=0.498
+TF-IDF + LR                                  P=0.796 R=0.607 F1=0.688 [0.684,0.693] macro=0.465 exact=0.573
+Hybrid: rules propose, classifier verifies   P=0.772 R=0.635 F1=0.697 [0.692,0.701] macro=0.487 exact=0.585
+Hybrid: classifier grounded by rules         P=0.887 R=0.551 F1=0.680 [0.675,0.684] macro=0.399 exact=0.544
+Hybrid: classifier grounded by hand rules    P=0.912 R=0.408 F1=0.564 [0.559,0.569] macro=0.197 exact=0.408
+SGD classifier                               P=0.796 R=0.614 F1=0.693 [0.689,0.698] macro=0.473 exact=0.577
+  Induced rules vs CyberRule: labels 5735/1239; CVEs 6774/963 McNemar p=0; dF1=+0.132 [+0.128,+0.137] AR p=0.0001
+  Induced rules vs Regex baseline: labels 7031/1187; CVEs 7659/915 McNemar p=0; dF1=+0.183 [+0.178,+0.188] AR p=0.0001
+  TF-IDF + LR vs Induced rules: labels 2580/1346; CVEs 1915/1919 McNemar p=0.96; dF1=+0.030 [+0.027,+0.033] AR p=0.0001
+  Hybrid: rules propose, classifier verifies vs TF-IDF + LR: labels 982/0; CVEs 765/341 McNemar p=5.7e-38; dF1=+0.008 [+0.007,+0.010] AR p=0.0001
+  CyberRule vs Regex baseline: labels 2687/1339; CVEs 2000/1067 McNemar p=1.6e-64; dF1=+0.051 [+0.047,+0.054] AR p=0.0001
+  verify vs LR: {'added_labels': 2080, 'added_correct': 982, 'added_incorrect': 1098, 'removed_labels': 0, 'cves_with_additions': 2024, 'tp_reconciles': True, 'fp_reconciles': True, 'fn_reconciles': True, 'precision_of_additions': 0.4721153846153846}
+
+== test2025  (41135 CVEs, 100 CWEs in macro-F1)
+Keyword baseline                             P=0.310 R=0.261 F1=0.284 [0.280,0.288] macro=0.037 exact=0.147
+Regex baseline                               P=0.639 R=0.389 F1=0.483 [0.479,0.487] macro=0.116 exact=0.305
+CyberRule                                    P=0.717 R=0.423 F1=0.532 [0.527,0.536] macro=0.184 exact=0.352
+Induced rules                                P=0.762 R=0.515 F1=0.615 [0.610,0.619] macro=0.367 exact=0.478
+Induced + hand rules                         P=0.647 R=0.568 F1=0.605 [0.601,0.608] macro=0.387 exact=0.432
+TF-IDF + LR                                  P=0.802 R=0.534 F1=0.641 [0.637,0.645] macro=0.388 exact=0.464
+Hybrid: rules propose, classifier verifies   P=0.777 R=0.570 F1=0.658 [0.654,0.661] macro=0.426 exact=0.481
+Hybrid: classifier grounded by rules         P=0.888 R=0.485 F1=0.627 [0.623,0.631] macro=0.323 exact=0.443
+Hybrid: classifier grounded by hand rules    P=0.914 R=0.367 F1=0.524 [0.519,0.528] macro=0.161 exact=0.348
+SGD classifier                               P=0.812 R=0.545 F1=0.652 [0.648,0.656] macro=0.391 exact=0.477
+  Induced rules vs CyberRule: labels 6938/2530; CVEs 6322/1123 McNemar p=0; dF1=+0.083 [+0.079,+0.087] AR p=0.0001
+  Induced rules vs Regex baseline: labels 8585/2529; CVEs 8152/1024 McNemar p=0; dF1=+0.131 [+0.127,+0.136] AR p=0.0001
+  TF-IDF + LR vs Induced rules: labels 3256/2355; CVEs 1983/2563 McNemar p=8e-18; dF1=+0.026 [+0.023,+0.029] AR p=0.0001
+  Hybrid: rules propose, classifier verifies vs TF-IDF + LR: labels 1740/0; CVEs 1192/500 McNemar p=3.7e-65; dF1=+0.017 [+0.015,+0.018] AR p=0.0001
+  CyberRule vs Regex baseline: labels 3473/1825; CVEs 2595/666 McNemar p=8.4e-267; dF1=+0.049 [+0.046,+0.052] AR p=0.0001
+  verify vs LR: {'added_labels': 3260, 'added_correct': 1740, 'added_incorrect': 1520, 'removed_labels': 0, 'cves_with_additions': 3186, 'tp_reconciles': True, 'fp_reconciles': True, 'fn_reconciles': True, 'precision_of_additions': 0.5337423312883436}
+
+== test2026  (68833 CVEs, 151 CWEs in macro-F1)
+Keyword baseline                             P=0.197 R=0.162 F1=0.178 [0.176,0.181] macro=0.022 exact=0.085
+Regex baseline                               P=0.518 R=0.244 F1=0.332 [0.328,0.335] macro=0.072 exact=0.204
+CyberRule                                    P=0.620 R=0.285 F1=0.390 [0.387,0.394] macro=0.117 exact=0.239
+Induced rules                                P=0.635 R=0.388 F1=0.482 [0.478,0.486] macro=0.250 exact=0.380
+Induced + hand rules                         P=0.536 R=0.437 F1=0.481 [0.478,0.485] macro=0.264 exact=0.341
+TF-IDF + LR                                  P=0.741 R=0.413 F1=0.530 [0.527,0.533] macro=0.258 exact=0.376
+Hybrid: rules propose, classifier verifies   P=0.721 R=0.451 F1=0.555 [0.552,0.558] macro=0.285 exact=0.398
+Hybrid: classifier grounded by rules         P=0.860 R=0.352 F1=0.500 [0.497,0.504] macro=0.207 exact=0.346
+Hybrid: classifier grounded by hand rules    P=0.868 R=0.235 F1=0.370 [0.366,0.374] macro=0.099 exact=0.232
+SGD classifier                               P=0.759 R=0.415 F1=0.537 [0.533,0.540] macro=0.253 exact=0.383
+  Induced rules vs CyberRule: labels 12298/3938; CVEs 11610/1933 McNemar p=0; dF1=+0.091 [+0.088,+0.095] AR p=0.0001
+  Induced rules vs Regex baseline: labels 15672/3982; CVEs 13890/1789 McNemar p=0; dF1=+0.150 [+0.146,+0.154] AR p=0.0001
+  TF-IDF + LR vs Induced rules: labels 6379/4402; CVEs 4094/4318 McNemar p=0.015; dF1=+0.048 [+0.046,+0.051] AR p=0.0001
+  Hybrid: rules propose, classifier verifies vs TF-IDF + LR: labels 3124/0; CVEs 1951/442 McNemar p=4.1e-225; dF1=+0.025 [+0.024,+0.026] AR p=0.0001
+  CyberRule vs Regex baseline: labels 6138/2808; CVEs 4070/1646 McNemar p=1.4e-232; dF1=+0.059 [+0.056,+0.061] AR p=0.0001
+  verify vs LR: {'added_labels': 5608, 'added_correct': 3124, 'added_incorrect': 2484, 'removed_labels': 0, 'cves_with_additions': 5501, 'tp_reconciles': True, 'fp_reconciles': True, 'fn_reconciles': True, 'precision_of_additions': 0.5570613409415122}
+CHECK against results_p2.json : all values identical
+== 11:30:09 python multilabel.py
+== test2024
+  K=1, tau=0.55                                  F1=0.659 P=0.777 R=0.571 single=0.675 multi=0.410 lab/CVE=0.77
+  K=2, tau=0.55                                  F1=0.609 P=0.620 R=0.600 single=0.620 multi=0.439 lab/CVE=1.01
+  K=2, tau=0.65                                  F1=0.631 P=0.723 R=0.559 single=0.643 multi=0.447 lab/CVE=0.81
+  K=3, tau=0.55                                  F1=0.602 P=0.597 R=0.606 single=0.612 multi=0.442 lab/CVE=1.06
+  K=3, tau=0.65                                  F1=0.628 P=0.715 R=0.560 single=0.640 multi=0.448 lab/CVE=0.82
+  rule candidates K=1                            F1=0.697 P=0.772 R=0.635 single=0.709 multi=0.506 lab/CVE=0.86
+  rule candidates K=3                            F1=0.696 P=0.773 R=0.633 single=0.708 multi=0.507 lab/CVE=0.85
+  CyberRule                                      F1=0.527 P=0.652 R=0.442 single=0.537 multi=0.367 lab/CVE=0.71
+  Induced rules                                  F1=0.659 P=0.777 R=0.571 single=0.675 multi=0.410 lab/CVE=0.77
+  TF-IDF + LR                                    F1=0.688 P=0.796 R=0.607 single=0.702 multi=0.483 lab/CVE=0.79
+  Hybrid: rules propose, classifier verifies     F1=0.697 P=0.772 R=0.635 single=0.709 multi=0.506 lab/CVE=0.86
+  Hybrid: classifier grounded by rules           F1=0.680 P=0.887 R=0.551 single=0.696 multi=0.432 lab/CVE=0.65
+== test2025
+  K=1, tau=0.55                                  F1=0.615 P=0.762 R=0.515 single=0.648 multi=0.512 lab/CVE=0.79
+  K=2, tau=0.55                                  F1=0.573 P=0.606 R=0.543 single=0.593 multi=0.511 lab/CVE=1.04
+  K=2, tau=0.65                                  F1=0.588 P=0.711 R=0.501 single=0.611 multi=0.516 lab/CVE=0.82
+  K=3, tau=0.55                                  F1=0.566 P=0.585 R=0.548 single=0.583 multi=0.514 lab/CVE=1.09
+  K=3, tau=0.65                                  F1=0.585 P=0.702 R=0.501 single=0.608 multi=0.514 lab/CVE=0.83
+  rule candidates K=1                            F1=0.658 P=0.777 R=0.570 single=0.684 multi=0.572 lab/CVE=0.85
+  rule candidates K=3                            F1=0.656 P=0.778 R=0.568 single=0.682 multi=0.573 lab/CVE=0.85
+  CyberRule                                      F1=0.532 P=0.717 R=0.423 single=0.550 multi=0.473 lab/CVE=0.69
+  Induced rules                                  F1=0.615 P=0.762 R=0.515 single=0.648 multi=0.512 lab/CVE=0.79
+  TF-IDF + LR                                    F1=0.641 P=0.802 R=0.534 single=0.671 multi=0.546 lab/CVE=0.78
+  Hybrid: rules propose, classifier verifies     F1=0.658 P=0.777 R=0.570 single=0.684 multi=0.572 lab/CVE=0.85
+  Hybrid: classifier grounded by rules           F1=0.627 P=0.888 R=0.485 single=0.665 multi=0.511 lab/CVE=0.64
+== test2026
+  K=1, tau=0.55                                  F1=0.482 P=0.635 R=0.388 single=0.526 multi=0.342 lab/CVE=0.72
+  K=2, tau=0.55                                  F1=0.459 P=0.508 R=0.419 single=0.487 multi=0.366 lab/CVE=0.97
+  K=2, tau=0.65                                  F1=0.451 P=0.590 R=0.365 single=0.488 multi=0.334 lab/CVE=0.73
+  K=3, tau=0.55                                  F1=0.454 P=0.486 R=0.425 single=0.477 multi=0.376 lab/CVE=1.03
+  K=3, tau=0.65                                  F1=0.448 P=0.579 R=0.366 single=0.485 multi=0.334 lab/CVE=0.74
+  rule candidates K=1                            F1=0.555 P=0.721 R=0.451 single=0.597 multi=0.415 lab/CVE=0.74
+  rule candidates K=3                            F1=0.553 P=0.720 R=0.448 single=0.594 multi=0.413 lab/CVE=0.73
+  CyberRule                                      F1=0.390 P=0.620 R=0.285 single=0.410 multi=0.330 lab/CVE=0.54
+  Induced rules                                  F1=0.482 P=0.635 R=0.388 single=0.526 multi=0.342 lab/CVE=0.72
+  TF-IDF + LR                                    F1=0.530 P=0.741 R=0.413 single=0.579 multi=0.367 lab/CVE=0.66
+  Hybrid: rules propose, classifier verifies     F1=0.555 P=0.721 R=0.451 single=0.597 multi=0.415 lab/CVE=0.74
+  Hybrid: classifier grounded by rules           F1=0.500 P=0.860 R=0.352 single=0.558 multi=0.318 lab/CVE=0.48
+== 11:31:53 python cna_only.py
+training CVEs with CNA labels 22471 of 29931
+classes 121 LR fit s 826
+dev-selected: LR threshold 0.25 tau 0.6 verify t 0.1
+test2024 {'Induced rules': (0.661, 0.71), 'TF-IDF + LR': (0.691, 0.731), 'Hybrid: rules propose, classifier verifies': (0.701, 0.741)}
+test2025 {'Induced rules': (0.613, 0.643), 'TF-IDF + LR': (0.638, 0.657), 'Hybrid: rules propose, classifier verifies': (0.662, 0.679)}
+test2026 {'Induced rules': (0.451, 0.482), 'TF-IDF + LR': (0.502, 0.519), 'Hybrid: rules propose, classifier verifies': (0.533, 0.551)}
+== 11:50:35 python figs_p2.py
+figs ok
+ext figs ok
+refresh fig ok
+== 11:50:41 python compare_outputs.py results
+dataset_stats.json: identical
+shift_stats.json: identical
+tune_rules.json: identical
+induced_rules.json: identical
+cwe_names.json: identical
+results_p2.json: identical
+tiers.json: identical
+clf2_results.json: identical
+ablate_ir.json: identical
+learning_curve.json: identical
+expand.json: identical
+kb_meta.json: identical
+kb_tiers.json: identical
+evaluation_report.json: identical
+multilabel.json: identical
+cna_only.json: identical
+cve_cwe_evidence_kb.jsonl.gz: identical
+predictions/dev.jsonl.gz: identical
+predictions/test2024.jsonl.gz: identical
+predictions/test2025.jsonl.gz: identical
+predictions/test2026.jsonl.gz: identical
+SUMMARY: all regenerated outputs match the released ones
