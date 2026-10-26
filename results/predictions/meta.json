@@ -1,0 +1,17 @@
+{
+ "lr_threshold": 0.25,
+ "verify_t": 0.1,
+ "sgd_threshold": 0.25,
+ "systems": [
+  "Keyword baseline",
+  "Regex baseline",
+  "CyberRule",
+  "Induced rules",
+  "Induced + hand rules",
+  "TF-IDF + LR",
+  "Hybrid: rules propose, classifier verifies",
+  "Hybrid: classifier grounded by rules",
+  "Hybrid: classifier grounded by hand rules",
+  "SGD classifier"
+ ]
+}
