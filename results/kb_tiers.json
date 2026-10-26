@@ -1,0 +1,23 @@
+{
+ "aligned": {
+  "n": 80329,
+  "correct": 70156,
+  "precision": 0.8733583139339467
+ },
+ "all": {
+  "n": 114471,
+  "correct": 85965,
+  "precision": 0.750976229787457,
+  "gold_total": 163776
+ },
+ "unaligned": {
+  "n": 11601,
+  "correct": 6653,
+  "precision": 0.5734850443927247
+ },
+ "none": {
+  "n": 22541,
+  "correct": 9156,
+  "precision": 0.4061931591322479
+ }
+}

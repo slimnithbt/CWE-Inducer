@@ -1,0 +1,152 @@
+{
+ "train": {
+  "n": 29931,
+  "multi_label_share": 0.042531154989809895,
+  "vuldb_share": 0.04714175937990712,
+  "vuldb_multi_share": 0.21545003543586108,
+  "cves_from_cnas_absent_in_training": 0.0,
+  "mean_desc_words": 50.06388025792656,
+  "top_cnas": [
+   [
+    "mitre",
+    4075
+   ],
+   [
+    "GitHub_M",
+    3182
+   ],
+   [
+    "WPScan",
+    2477
+   ],
+   [
+    "VulDB",
+    1411
+   ],
+   [
+    "@huntrdev",
+    1107
+   ]
+  ]
+ },
+ "dev": {
+  "n": 9497,
+  "multi_label_share": 0.03000947667684532,
+  "vuldb_share": 0.07560282194377171,
+  "vuldb_multi_share": 0.01532033426183844,
+  "cves_from_cnas_absent_in_training": 0.02548173107297041,
+  "mean_desc_words": 46.93355796567337,
+  "top_cnas": [
+   [
+    "Patchstack",
+    1464
+   ],
+   [
+    "GitHub_M",
+    897
+   ],
+   [
+    "VulDB",
+    718
+   ],
+   [
+    "mitre",
+    599
+   ],
+   [
+    "Wordfence",
+    434
+   ]
+  ]
+ },
+ "test2024": {
+  "n": 33337,
+  "multi_label_share": 0.03863575006749258,
+  "vuldb_share": 0.08711041785403606,
+  "vuldb_multi_share": 0.14566115702479338,
+  "cves_from_cnas_absent_in_training": 0.05903350631430543,
+  "mean_desc_words": 51.20190779014308,
+  "top_cnas": [
+   [
+    "mitre",
+    5598
+   ],
+   [
+    "Patchstack",
+    4468
+   ],
+   [
+    "Wordfence",
+    3492
+   ],
+   [
+    "VulDB",
+    2904
+   ],
+   [
+    "GitHub_M",
+    2105
+   ]
+  ]
+ },
+ "test2025": {
+  "n": 41135,
+  "multi_label_share": 0.16083627081560714,
+  "vuldb_share": 0.1432843077671083,
+  "vuldb_multi_share": 0.9083814048184594,
+  "cves_from_cnas_absent_in_training": 0.07417041448887808,
+  "mean_desc_words": 51.0958064908229,
+  "top_cnas": [
+   [
+    "Patchstack",
+    6913
+   ],
+   [
+    "VulDB",
+    5894
+   ],
+   [
+    "mitre",
+    5131
+   ],
+   [
+    "Wordfence",
+    3424
+   ],
+   [
+    "GitHub_M",
+    2864
+   ]
+  ]
+ },
+ "test2026": {
+  "n": 68833,
+  "multi_label_share": 0.1570031816134703,
+  "vuldb_share": 0.08324495518138102,
+  "vuldb_multi_share": 0.8284467713787086,
+  "cves_from_cnas_absent_in_training": 0.08230064068106867,
+  "mean_desc_words": 61.03738032629698,
+  "top_cnas": [
+   [
+    "GitHub_M",
+    11734
+   ],
+   [
+    "VulnCheck",
+    6931
+   ],
+   [
+    "VulDB",
+    5730
+   ],
+   [
+    "Patchstack",
+    4677
+   ],
+   [
+    "Wordfence",
+    3550
+   ]
+  ]
+ }
+}

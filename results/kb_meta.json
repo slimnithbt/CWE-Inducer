@@ -1,0 +1,43 @@
+{
+ "cves": 143305,
+ "assertions": 114471,
+ "evidence_spans": 163247,
+ "triples": 1924086,
+ "serialize_seconds": 64.92843389511108,
+ "parse_seconds": 77.37950730323792,
+ "queries": {
+  "CQ1: assertions per evidence tier": {
+   "rows": [
+    [
+     "aligned",
+     "80329"
+    ],
+    [
+     "none",
+     "22541"
+    ],
+    [
+     "unaligned",
+     "11601"
+    ]
+   ],
+   "seconds": 3.09
+  },
+  "CQ2: CVEs with an aligned CWE-79 assertion": {
+   "rows": [
+    [
+     "19344"
+    ]
+   ],
+   "seconds": 0.67
+  },
+  "CQ3: assertions without any evidence span (review queue)": {
+   "rows": [
+    [
+     "22541"
+    ]
+   ],
+   "seconds": 10.32
+  }
+ }
+}
